@@ -1,9 +1,17 @@
 /*********************************************************
 * vcat.c 
 *
-* Your Name: 
+* Your Name: Rafi Khaled
 *********************************************************/
+#include <stdio.h>
 
 int main(int argc, char *argv[]) {
-    return 0;
+    FILE *fp = fopen("vcat.c", "r");
+    
+    if (fp == NULL) {
+        printf("cannot open file\n");
+        // exit(1);
+    }
+
+    
 }
