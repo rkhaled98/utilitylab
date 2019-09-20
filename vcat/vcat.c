@@ -28,6 +28,7 @@ int main(int argc, char *argv[])
                 // read 64 characters at most per time
                 newline = fgets(newline, 64, fp);
 
+                // fgets has rc value of null when reaching the end of file
                 if (newline == NULL)
                 {
                     break;
