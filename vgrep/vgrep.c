@@ -20,6 +20,26 @@ int main(int argc, char *argv[])
 
     else if (argc == 2)
     {
+        while (1)
+        {
+            char *newline = (char *)malloc(64);
+
+            newline = fgets(newline, 64, stdin);
+
+            if (newline == NULL)
+            {
+                break;
+            }
+
+            char *res = strstr(newline, argv[1]);
+
+            if (res)
+            {
+                printf("res%s", newline);
+            }
+
+            free(newline);
+        }
     }
 
     for (size_t i = 2; i < argc; i++)
