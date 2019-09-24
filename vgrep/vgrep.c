@@ -9,9 +9,6 @@
 
 int main(int argc, char *argv[])
 {
-    // char *find = argv[1];
-    // printf("%s", find);
-    // printf("%d", argc);
     if (argc == 1)
     {
         printf("vgrep: searchterm [file ...]\n");
@@ -57,40 +54,28 @@ int main(int argc, char *argv[])
             {
                 while (1)
                 {
-                    // allocate 64 bytes
-                    char *newline = (char *)malloc(256);
+                    char *line = NULL;
+                    size_t len = 2;
+                    size_t nread;
 
-                    // read 64 characters at most per time
-                    newline = fgets(newline, 256, fp);
+                    nread = getline(&line, &len, fp);
 
-                    // fgets has rc value of null when reaching the end of file
-                    if (newline == NULL)
+                    if (nread == -1)
                     {
                         break;
                     }
 
                     char *res;
-                    res = strstr((char *)newline, (char *)argv[1]);
-
-                    // printf("%s", res);
+                    res = strstr(line, argv[1]);
 
                     if (res)
                     {
-                        printf("%s", newline);
+                        fwrite(line, nread, 1, stdout);
                     }
-                    // else
-                    // {
-                    //     printf("%s", "hello");
-                    //     // printf("%s", newline);
-                    // }
 
-                    free(newline);
+                    free(line);
                 }
             }
         }
     }
-
-    // char *arg1 = argv[2];
-    // printf("%s", arg1);
-    // return 0;
 }
