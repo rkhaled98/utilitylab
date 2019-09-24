@@ -22,9 +22,9 @@ int main(int argc, char *argv[])
     {
         while (1)
         {
-            char *newline = (char *)malloc(64);
+            char *newline = (char *)malloc(128);
 
-            newline = fgets(newline, 64, stdin);
+            newline = fgets(newline, 128, stdin);
 
             if (newline == NULL)
             {
@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
 
             if (res)
             {
-                printf("res%s", newline);
+                printf("%s", newline);
             }
 
             free(newline);
