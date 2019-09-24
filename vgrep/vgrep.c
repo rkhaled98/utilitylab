@@ -42,47 +42,50 @@ int main(int argc, char *argv[])
         }
     }
 
-    for (size_t i = 2; i < argc; i++)
+    else
     {
-        FILE *fp = fopen(argv[i], "r");
+        for (size_t i = 2; i < argc; i++)
+        {
+            FILE *fp = fopen(argv[i], "r");
 
-        if (fp == NULL)
-        {
-            printf("vgrep: cannot open file\n");
-            exit(1);
-        }
-        else
-        {
-            while (1)
+            if (fp == NULL)
             {
-                // allocate 64 bytes
-                char *newline = (char *)malloc(64);
-
-                // read 64 characters at most per time
-                newline = fgets(newline, 64, fp);
-
-                // fgets has rc value of null when reaching the end of file
-                if (newline == NULL)
+                printf("vgrep: cannot open file\n");
+                exit(1);
+            }
+            else
+            {
+                while (1)
                 {
-                    break;
+                    // allocate 64 bytes
+                    char *newline = (char *)malloc(256);
+
+                    // read 64 characters at most per time
+                    newline = fgets(newline, 256, fp);
+
+                    // fgets has rc value of null when reaching the end of file
+                    if (newline == NULL)
+                    {
+                        break;
+                    }
+
+                    char *res;
+                    res = strstr((char *)newline, (char *)argv[1]);
+
+                    // printf("%s", res);
+
+                    if (res)
+                    {
+                        printf("%s", newline);
+                    }
+                    // else
+                    // {
+                    //     printf("%s", "hello");
+                    //     // printf("%s", newline);
+                    // }
+
+                    free(newline);
                 }
-
-                char *res;
-                res = strstr((char *)newline, (char *)argv[1]);
-
-                // printf("%s", res);
-
-                if (res)
-                {
-                    printf("%s", newline);
-                }
-                // else
-                // {
-                //     printf("%s", "hello");
-                //     // printf("%s", newline);
-                // }
-
-                free(newline);
             }
         }
     }
