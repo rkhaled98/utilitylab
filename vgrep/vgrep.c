@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
         while (1)
         {
             char *line = NULL;
-            size_t len = 2;
+            size_t len = 0;
             size_t nread;
 
             nread = getline(&line, &len, stdin);
@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
                 while (1)
                 {
                     char *line = NULL;
-                    size_t len = 2;
+                    size_t len = 0;
                     size_t nread;
 
                     nread = getline(&line, &len, fp);
