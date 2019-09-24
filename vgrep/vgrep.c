@@ -19,23 +19,26 @@ int main(int argc, char *argv[])
     {
         while (1)
         {
-            char *newline = (char *)malloc(128);
+            char *line = NULL;
+            size_t len = 2;
+            size_t nread;
 
-            newline = fgets(newline, 128, stdin);
+            nread = getline(&line, &len, stdin);
 
-            if (newline == NULL)
+            if (nread == -1)
             {
                 break;
             }
 
-            char *res = strstr(newline, argv[1]);
+            char *res;
+            res = strstr(line, argv[1]);
 
             if (res)
             {
-                printf("%s", newline);
+                fwrite(line, nread, 1, stdout);
             }
 
-            free(newline);
+            free(line);
         }
     }
 
