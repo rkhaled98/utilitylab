@@ -93,12 +93,12 @@ int main(int argc, char *argv[])
                     // printf("%d", (*i == 'v'));
                 }
 
-                if (count > 1)
-                {
-                    // fwrite(&count, 4, 1, stdout);
-                    // fwrite(&prev, 1, 1, stdout);
-                    printf("%d%c", count, prev);
-                }
+                // if (count > 1)
+                // {
+                //     // fwrite(&count, 4, 1, stdout);
+                //     // fwrite(&prev, 1, 1, stdout);
+                //     printf("%d%c", count, prev);
+                // }
 
                 free(line);
                 // free(lineptr);
@@ -106,6 +106,12 @@ int main(int argc, char *argv[])
         }
         // return 0;
         fclose(fp);
+    }
+    if (count > 1)
+    {
+        // fwrite(&count, 4, 1, stdout);
+        // fwrite(&prev, 1, 1, stdout);
+        printf("%d%c", count, prev);
     }
     // if (count > 0)
     // {
