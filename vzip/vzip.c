@@ -10,6 +10,15 @@
 
 int main(int argc, char *argv[])
 {
+    if (argc == 1)
+    {
+        printf("vzip: file1 [file2 ...]\n");
+        exit(1);
+    }
+
+    int count = 1;
+    char prev = '\0';
+
     for (size_t i = 1; i < argc; i++)
     {
         FILE *fp = fopen(argv[i], "r");
@@ -21,6 +30,7 @@ int main(int argc, char *argv[])
         }
         else
         {
+
             while (1)
             {
                 char *line = NULL;
@@ -40,21 +50,39 @@ int main(int argc, char *argv[])
                 // printf("%c \n", *(lineptr++));
                 // printf("%c \n", *(lineptr++));
 
-                char *i = (lineptr);
-                lineptr++;
+                char *i;
 
-                char prev = *i;
-
-                int count = 1;
+                if (!prev || prev == '\n')
+                {
+                    i = (lineptr);
+                    lineptr++;
+                    prev = *i;
+                }
 
                 // char prev;
-                for (i = lineptr; *i; i++)
+                for (i = lineptr; *i != '\0'; i++)
                 {
+
                     if (*i != prev)
                     {
-                        printf("%d%c", count, prev);
-                        prev = *i;
-                        count = 0;
+                        if (*i == '\n')
+                        {
+                            printf("%d%c", count, prev);
+                            printf("\n");
+                            prev = *i;
+                            count = 1;
+                            // continue;
+                        }
+                        else
+                        {
+                            printf("%d%c", count, prev);
+                            prev = *i;
+                            count = 1;
+                        }
+                        // fwrite(&count, 4, 1, stdout);
+                        // fwrite(&prev, 1, 1, stdout);
+                        // use fwrite with 5 bytes? so
+                        // fwrite (line, 5, 1, stdout)
                     }
                     else
                     {
@@ -64,24 +92,26 @@ int main(int argc, char *argv[])
                     // printf("%c", *i);
                     // printf("%d", (*i == 'v'));
                 }
-                if (count > 0)
+
+                if (count > 1)
                 {
+                    // fwrite(&count, 4, 1, stdout);
+                    // fwrite(&prev, 1, 1, stdout);
                     printf("%d%c", count, prev);
                 }
 
-                // char *res;
-                // res = strstr(line, argv[1]);
-
-                // if (res)
-                // {
-                //     fwrite(line, nread, 1, stdout);
-                // }
-
                 free(line);
+                // free(lineptr);
             }
         }
         // return 0;
         fclose(fp);
     }
+    // if (count > 0)
+    // {
+    //     // fwrite(&count, 4, 1, stdout);
+    //     // fwrite(&prev, 1, 1, stdout);
+    //     printf("%d%c", count, prev);
+    // }
     return 0;
 }
