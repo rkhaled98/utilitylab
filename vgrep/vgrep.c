@@ -15,10 +15,12 @@ int main(int argc, char *argv[])
         exit(1);
     }
 
+    // the case in which no files are provided - read from stdin
     else if (argc == 2)
     {
         while (1)
         {
+            // allocate vars for getline
             char *line = NULL;
             size_t len = 0;
             size_t nread;
@@ -30,9 +32,11 @@ int main(int argc, char *argv[])
                 break;
             }
 
+            // search for the word given
             char *res;
             res = strstr(line, argv[1]);
 
+            // if it is available, then print it
             if (res)
             {
                 fwrite(line, nread, 1, stdout);
@@ -57,6 +61,7 @@ int main(int argc, char *argv[])
             {
                 while (1)
                 {
+                    // allocate vars for getline
                     char *line = NULL;
                     size_t len = 0;
                     size_t nread;
@@ -68,9 +73,11 @@ int main(int argc, char *argv[])
                         break;
                     }
 
+                    // search for the word given
                     char *res;
                     res = strstr(line, argv[1]);
 
+                    // if it is available, then print it
                     if (res)
                     {
                         fwrite(line, nread, 1, stdout);

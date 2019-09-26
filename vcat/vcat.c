@@ -34,6 +34,7 @@ int main(int argc, char *argv[])
                     break;
                 }
 
+                // print the newline
                 printf("%s", newline);
 
                 free(newline);

@@ -15,6 +15,7 @@ int main(int argc, char *argv[])
         exit(1);
     }
 
+    // set up the default counts and values for vars
     int count = 1;
     char prev = '\0';
 
@@ -32,6 +33,7 @@ int main(int argc, char *argv[])
 
             while (1)
             {
+                // set up the vars for getline
                 char *line = NULL;
                 size_t len = 0;
                 size_t nread;
@@ -43,9 +45,13 @@ int main(int argc, char *argv[])
                     break;
                 }
 
+                // we have a lineptr to the line to use in the for loop
                 char *lineptr = line;
+                // this will be our variable for the for loop
                 char *i;
 
+                // if we do not have a previous character stored, then
+                // lets initialize things!
                 if (!prev)
                 {
                     i = (lineptr);
@@ -55,7 +61,8 @@ int main(int argc, char *argv[])
 
                 for (i = lineptr; *i != '\0'; i++)
                 {
-
+                    // if the previous character is not the same as the current one,
+                    // then we need to record the previous and the count
                     if (*i != prev)
                     {
                         fwrite(&count, 4, 1, stdout);
@@ -64,6 +71,7 @@ int main(int argc, char *argv[])
                         prev = *i;
                         count = 1;
                     }
+                    // otherwise, keep counting up
                     else
                     {
                         count++;
@@ -76,6 +84,7 @@ int main(int argc, char *argv[])
         fclose(fp);
     }
 
+    // the other cases are if, for example there is a newline that ends the file, then still record that.
     if (count > 1 || prev == '\n')
     {
         fwrite(&count, 4, 1, stdout);
