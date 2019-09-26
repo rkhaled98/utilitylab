@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
 
                 char *i;
 
-                if (!prev || prev == '\n')
+                if (!prev)
                 {
                     i = (lineptr);
                     lineptr++;
@@ -65,20 +65,28 @@ int main(int argc, char *argv[])
 
                     if (*i != prev)
                     {
-                        if (*i == '\n')
-                        {
-                            printf("%d%c", count, prev);
-                            printf("\n");
-                            prev = *i;
-                            count = 1;
-                            // continue;
-                        }
-                        else
-                        {
-                            printf("%d%c", count, prev);
-                            prev = *i;
-                            count = 1;
-                        }
+                        // if (*i == '\n')
+                        // {
+                        //     fwrite(&count, 4, 1, stdout);
+                        //     fwrite(&prev, 1, 1, stdout);
+                        //     char newline = '\n';
+                        //     int newlineCount = 1;
+                        //     fwrite(&newlineCount, 4, 1, stdout);
+                        //     fwrite(&newline, 1, 1, stdout);
+                        //     // printf("%d%c", count, prev);
+                        //     // printf("\n");
+                        //     prev = *i;
+                        //     count = 1;
+                        //     // continue;
+                        // }
+                        // else
+                        // {
+                        fwrite(&count, 4, 1, stdout);
+                        fwrite(&prev, 1, 1, stdout);
+                        // printf("%d%c", count, prev);
+                        prev = *i;
+                        count = 1;
+                        // }
                         // fwrite(&count, 4, 1, stdout);
                         // fwrite(&prev, 1, 1, stdout);
                         // use fwrite with 5 bytes? so
@@ -109,9 +117,16 @@ int main(int argc, char *argv[])
     }
     if (count > 1)
     {
-        // fwrite(&count, 4, 1, stdout);
-        // fwrite(&prev, 1, 1, stdout);
-        printf("%d%c", count, prev);
+        fwrite(&count, 4, 1, stdout);
+        fwrite(&prev, 1, 1, stdout);
+        // printf("%d%c", count, prev);
+    }
+    if (prev == '\n')
+    {
+        char newline = '\n';
+        int newlineCount = 1;
+        fwrite(&newlineCount, 4, 1, stdout);
+        fwrite(&newline, 1, 1, stdout);
     }
     // if (count > 0)
     // {
