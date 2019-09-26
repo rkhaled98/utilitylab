@@ -6,7 +6,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 int main(int argc, char *argv[])
 {
@@ -45,11 +44,6 @@ int main(int argc, char *argv[])
                 }
 
                 char *lineptr = line;
-                // printf("%ld", strlen(line));
-                // printf("%c \n", *(lineptr++));
-                // printf("%c \n", *(lineptr++));
-                // printf("%c \n", *(lineptr++));
-
                 char *i;
 
                 if (!prev)
@@ -59,80 +53,34 @@ int main(int argc, char *argv[])
                     prev = *i;
                 }
 
-                // char prev;
                 for (i = lineptr; *i != '\0'; i++)
                 {
 
                     if (*i != prev)
                     {
-                        // if (*i == '\n')
-                        // {
-                        //     fwrite(&count, 4, 1, stdout);
-                        //     fwrite(&prev, 1, 1, stdout);
-                        //     char newline = '\n';
-                        //     int newlineCount = 1;
-                        //     fwrite(&newlineCount, 4, 1, stdout);
-                        //     fwrite(&newline, 1, 1, stdout);
-                        //     // printf("%d%c", count, prev);
-                        //     // printf("\n");
-                        //     prev = *i;
-                        //     count = 1;
-                        //     // continue;
-                        // }
-                        // else
-                        // {
                         fwrite(&count, 4, 1, stdout);
                         fwrite(&prev, 1, 1, stdout);
-                        // printf("%d%c", count, prev);
+
                         prev = *i;
                         count = 1;
-                        // }
-                        // fwrite(&count, 4, 1, stdout);
-                        // fwrite(&prev, 1, 1, stdout);
-                        // use fwrite with 5 bytes? so
-                        // fwrite (line, 5, 1, stdout)
                     }
                     else
                     {
                         count++;
                     }
-
-                    // printf("%c", *i);
-                    // printf("%d", (*i == 'v'));
                 }
 
-                // if (count > 1)
-                // {
-                //     // fwrite(&count, 4, 1, stdout);
-                //     // fwrite(&prev, 1, 1, stdout);
-                //     printf("%d%c", count, prev);
-                // }
-
                 free(line);
-                // free(lineptr);
             }
         }
-        // return 0;
         fclose(fp);
     }
-    if (count > 1)
+
+    if (count > 1 || prev == '\n')
     {
         fwrite(&count, 4, 1, stdout);
         fwrite(&prev, 1, 1, stdout);
-        // printf("%d%c", count, prev);
     }
-    if (prev == '\n')
-    {
-        char newline = '\n';
-        int newlineCount = 1;
-        fwrite(&newlineCount, 4, 1, stdout);
-        fwrite(&newline, 1, 1, stdout);
-    }
-    // if (count > 0)
-    // {
-    //     // fwrite(&count, 4, 1, stdout);
-    //     // fwrite(&prev, 1, 1, stdout);
-    //     printf("%d%c", count, prev);
-    // }
+
     return 0;
 }
